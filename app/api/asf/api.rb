@@ -19,7 +19,7 @@
       desc "Return children categories"
       get :categories do
         p=Item.find(params[:category])
-        Item.where(id: p[:cs])
+        Item.find(p[:cs]).limit(100)
 
       end
 
