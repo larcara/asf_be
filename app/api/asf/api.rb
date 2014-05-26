@@ -16,9 +16,9 @@
       get :main_categories do
         Item.where(ps: nil).with_size(cs: 1).map{|x| [x.id,x.name]}
       end
-      esc "Return children categories"
+      desc "Return children categories"
       get :categories do
-        p=Item.where(id: params[:category])
+        p=Item.find(params[:category])
         Item.where(id: p[:cs])
 
       end
