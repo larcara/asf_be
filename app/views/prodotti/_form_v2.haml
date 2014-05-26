@@ -1,0 +1,31 @@
+=form_for(@prodotto, class: ".form-inline") do |f|
+  -if @prodotto.errors.any?
+    .error_explanation
+      %h2="#{pluralize(@prodotto.errors.count, "error")} prohibited this prodotto from being saved:"
+      %ul
+        -@prodotto.errors.full_messages.each do |msg|
+          %li= msg
+  .row
+    .span2=f.label :nome_commerciale
+    .span6=f.text_field :nome_commerciale
+  .row
+    .span2=f.label :marca
+    .span6=f.text_field :marca
+  .row
+    .span2=f.label :tipo_prodotto
+    .span6=f.select :tipo_prodotto, ["Di Marca","GDO","Dist Locale","Primo Prezzo"]
+  .row
+    .span2=f.label :tags
+    .span6=f.text_field :tags
+  .row
+    .span2=f.label :codice_a_barre
+    .span6=f.text_field :codice_a_barre
+  .row
+    .span2=f.label :etichetta
+    .span7=f.text_area :etichetta
+  
+  .actions
+    =f.submit
+%p=link_to 'Elenco Prodotti', prodotti_path
+%p=link_to 'Nuovo Prodotto', new_prodotto_path
+%p=link_to 'Nuova Rilevazione', new_prezzo_path(prodotto_id: @prodotto.id) unless @prodotto.new_record?

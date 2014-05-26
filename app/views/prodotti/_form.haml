@@ -1,0 +1,68 @@
+=form_for(@prodotto, class: ".form-inline") do |f|
+  -if @prodotto.errors.any?
+    .error_explanation
+      %h2="#{pluralize(@prodotto.errors.count, "error")} prohibited this prodotto from being saved:"
+      %ul
+        -@prodotto.errors.full_messages.each do |msg|
+          %li= msg
+  .row
+    .span2=f.label :nome_commerciale
+    .span6=f.text_field :nome_commerciale
+  .row
+    .span2=f.label :marca
+    .span6=f.text_field :marca
+  .row
+    .span2=f.label :tipo_prodotto
+    .span6=f.select :tipo_prodotto, ["Di Marca","GDO","Dist Locale","Primo Prezzo"]
+  .row
+    .span2=f.label :tags
+    .span6=f.text_field :tags
+  .row
+    .span2=f.label :punto_vendita
+    .span6=f.select :negozio_id, Negozio.all.map{|x| [x.denominazione, x.id]},{:include_blank=>"-nuovo-"}
+  .row
+    .span2=f.label :data_rilevazione
+    .span7=f.date_select :data_rilevazione
+  .row
+    .span2=f.label :in_promozione
+    .span1=f.select :in_promozione, [["Si",1]],{:include_blank=>"No"}, :class=>"input-mini"
+    .span1=f.label :con_carta
+    .span1=f.select :con_carta, [["Si",1]],{:include_blank=>"No"},  :class=>"input-mini"
+
+  .row
+    .span2=f.label :validita
+    .span3=f.text_field :valido_dal
+    .span3=f.text_field :valido_al
+
+
+  #prezzi.form-inline
+    .row
+      .span1="um"
+      .span1="qta"
+      .span1="prezzo"
+      .span1="prz unit"
+      .span1="in promo"
+      .span3="dal-al"
+      .span2="note"
+    =f.fields_for :prezzi do |pz|
+      .row
+        .span6
+          =pz.text_field :negozio_id, :class=>"input-mini"
+          =pz.text_field :data_rilevazione, :class=>"input-mini"
+          =pz.text_field :valido_dal, :class=>"input-small" 
+          =pz.text_field :valido_al, :class=>"input-small" 
+          =pz.text_field :in_promozione, :class=>"input-mini"
+      .row
+        .span1=pz.text_field :um, :class=>"input-mini"
+        .span1=pz.text_field :qta, :class=>"input-mini"
+        .span1=pz.text_field :prezzo, :class=>"input-mini"
+        .span1=pz.text_field :qta_min, :class=>"input-mini"
+        
+        .span1=pz.object.prezzo_unit
+        .span2=pz.text_field :note, :class=>"input" 
+        .span2=pz.select :_destroy, [["Cancella",1],["",0]], {:include_blank=>""}, {:class=>"input-mini"}
+  .actions
+    =f.submit
+=link_to 'Elenco', prodotti_path
+=link_to 'Nuovo', new_prodotto_path
+

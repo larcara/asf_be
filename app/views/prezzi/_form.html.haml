@@ -1,0 +1,81 @@
+= form_for @prezzo do |f|
+  - if @prezzo.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@prezzo.errors.count, "error")} prohibited this prezzo from being saved:"
+      %ul
+        - @prezzo.errors.full_messages.each do |msg|
+          %li= msg
+  #prezzi.form-inline
+    
+    .row
+      .span1="Negozio"
+      .span6=f.collection_select(:negozio_id, Negozio.all, :id, :denominazione, {:include_blank=>"-nuovo-"})
+    #nuovo_negozio
+      =fields_for :negozio do |ngz|
+        .row
+          .span2=ngz.label :denominazione
+          .span6=ngz.text_field :denominazione
+        .row
+          .span2=ngz.label :citta
+          .span6=ngz.text_field :citta
+        .row
+          .span2=ngz.label :cap
+          .span6=ngz.text_field :cap
+        .row
+          .span2=ngz.label :indirizzo
+          .span6=ngz.text_field :indirizzo
+        .row
+          .span2=ngz.label :lat
+          .span6=ngz.text_field :lat
+        .row
+          .span2=ngz.label :lng
+          .span6=ngz.text_field :lng
+        .row
+          .span2=ngz.label :parcheggio
+          .span6=ngz.text_field :parcheggio
+        .row
+          .span2=ngz.label :tipologia
+          .span6=ngz.text_field :tipologia
+    .row
+      .span1="Prodotto"
+      .span6=f.collection_select(:prodotto_id, Prodotto.all, :id, :nome_commerciale, {:include_blank=>"-nuovo-"})
+    #nuovo_prodotto
+      =fields_for :prodotto do |prd|
+        .row
+          .span2=prd.label :nome_commerciale
+          .span6=prd.text_field :nome_commerciale
+        .row
+          .span2=prd.label :marca
+          .span6=prd.text_field :marca
+        .row
+          .span2=prd.label :tipo_prodotto
+          .span6=prd.select :tipo_prodotto, ["Di Marca","GDO","Dist Locale","Primo Prezzo"]
+        .row
+          .span2=prd.label :tags
+          .span6=prd.text_field :tags
+        .row
+          .span2=prd.label :codice_a_barre
+          .span6=prd.text_field :codice_a_barre
+    .row
+      .span1="data_rilevazione"
+      .span6=f.text_field :data_rilevazione, :class=>"input"
+    .row    
+      .span1="prezzo"
+      .span6=f.text_field :prezzo, :class=>"input"
+    .row
+      .span1="in promo"
+      .span3=f.select :in_promozione, [["Si",1]], {:include_blank=>"No"}, {:class=>"input-mini"}
+    .row
+      .span1="valido dal-al"
+      .span3=f.text_field :valido_dal, :class=>"input-small" 
+      .span3=f.text_field :valido_al, :class=>"input-small"
+    .row
+      .span1="Note"
+      .span6=f.text_field :note, :class=>"input input-large"
+    .row
+      .span6="package: indicare quantita e unità di musura, una per riga"
+    .row
+      .span6=f.text_area :package_str, :placeholder => '4 pz, 0.720 Kg', :rows=>4
+
+  .actions
+    = f.submit 'Save'

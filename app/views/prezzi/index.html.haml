@@ -1,0 +1,23 @@
+%h1 Elenco Rilevazione Prezzi
+
+%table.table.bordered
+  %tr
+    %th
+    %th
+    %th
+
+  - @prezzi.each do |prezzo|
+    %tr
+      %td= link_to raw(prezzo.prodotto.to_label) , prezzo_url(prezzo, format: :json)  if prezzo.prodotto
+      %td.span2
+        =prezzo.prezzo
+        =prezzo.package_str
+      %td.span2= raw(prezzo.to_label)
+      %td= link_to 'E', edit_prezzo_path(prezzo)
+      %td= link_to 'D', new_prezzo_path(negozio_id: prezzo.negozio_id, prezzo: prezzo.attributes)
+      %td= link_to 'X', prezzo, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Prezzo', new_prezzo_path
+= link_to 'json', prezzi_path(params.merge(format: :json))

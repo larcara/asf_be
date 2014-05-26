@@ -1,0 +1,16 @@
+= form_for @asf_setting do |f|
+  - if @asf_setting.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@asf_setting.errors.count, "error")} prohibited this asf_setting from being saved:"
+      %ul
+        - @asf_setting.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :value
+    = f.text_area :value
+  .actions
+    = f.submit 'Save'

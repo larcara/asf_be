@@ -1,0 +1,15 @@
+.row
+  .span10.center-text{id:"categorie"}
+    -@tags.each do |x|
+      =link_to x[1], "#", class: "categoria" , rel: x[0], title:x[0]
+
+
+:javascript
+    $.fn.tagcloud.defaults = {
+        size: {start: 14, end: 18, unit: 'pt'},
+        color: {start: '#cde', end: '#f52'}
+    };
+
+    $(function () {
+        $('#categorie a').tagcloud();
+    });

@@ -1,0 +1,33 @@
+= form_for @negozio do |f|
+  - if @negozio.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@negozio.errors.count, "error")} prohibited this negozio from being saved:"
+      %ul
+        - @negozio.errors.full_messages.each do |msg|
+          %li= msg
+  .row
+    .span2=f.label :denominazione
+    .span6=f.text_field :denominazione
+  .row
+    .span2=f.label :citta
+    .span6=f.text_field :citta
+  .row
+    .span2=f.label :cap
+    .span6=f.text_field :cap
+  .row
+    .span2=f.label :indirizzo
+    .span6=f.text_field :indirizzo
+  .row
+    .span2=f.label :lat
+    .span6=f.text_field :lat
+  .row
+    .span2=f.label :lng
+    .span6=f.text_field :lng
+  .row
+    .span2=f.label :parcheggio
+    .span6=f.text_field :parcheggio
+  .row
+    .span2=f.label :tipologia
+    .span6=f.text_field :tipologia
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Data rilevazione:</b>
+  <%= @prodotto.data_rilevazione %>
+</p>
+
+<p>
+  <b>Punto vendita:</b>
+  <%= @prodotto.negozio.denominazione %>
+</p>
+
+<p>
+  <b>Tipo prodotto:</b>
+  <%= @prodotto.tipo_prodotto %>
+</p>
+
+
+<%= link_to 'Edit', edit_prodotto_path(@prodotto) %> |
+<%= link_to 'Back', prodotti_path %>

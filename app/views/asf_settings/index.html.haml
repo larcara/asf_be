@@ -1,0 +1,22 @@
+%h1 Listing asf_settings
+
+%table
+  %tr
+    %th Id
+    %th Name
+    %th Value
+    %th
+    %th
+
+  - @asf_settings.each do |asf_setting|
+    %tr
+      %td= asf_setting.id
+      %td= asf_setting.name
+      %td= asf_setting.value
+      %td= link_to 'Show', asf_setting
+      %td= link_to 'Edit', edit_asf_setting_path(asf_setting)
+      %td= link_to 'Destroy', asf_setting, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Asf setting', new_asf_setting_path

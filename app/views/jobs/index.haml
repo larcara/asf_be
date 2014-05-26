@@ -1,0 +1,65 @@
+%h1 Listing jobs
+=form_tag(jobs_url, class: ".form-inline", :method => :get) do
+  .row
+    =hidden_field_tag "init"
+    =text_field_tag "from", "1"
+    =text_field_tag "to", "1000"
+    =text_field_tag "step", "100"
+  .row
+    =radio_button_tag "azione",1
+    .label="Rigenera"
+    =radio_button_tag "azione", 2
+    .label="RiElabora con Prodotti"
+    =radio_button_tag "azione", 3
+    .label="RiElabora senza Prodotti"
+    =radio_button_tag "azione", 4
+    .label="RiElabora working"
+    =submit_tag
+
+
+%table.table.table-condensed
+  %tr
+    %th="num"
+    %th="decsrizione"
+    %th="eseguiti"
+    %th="con prod"
+    %th="con prezzi"
+    %th="start"
+    %th="end"
+    %th="from"
+    %th="to"
+    %th="Azioni"
+
+  - @jobs.each_with_index do |job, i|
+    %tr
+      %td= i
+      %td= job.description
+      %td
+        =job.eseguiti
+        ="(#{job.status})"
+      %td= job.con_prodotti
+      %td= job.con_prezzi
+      %td= job.start_time.strftime("%H:%M:%S") if job.start_time
+      %td= job.end_time.strftime("%H:%M:%S")  if job.end_time
+      %td= job.from
+      %td= job.to
+      %td
+        = link_to 'Relaunch', job
+        = link_to 'Destroy', job, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+
+:javascript
+    $(function () {
+        $('#tags a').tagcloud();
+        $('#filtri a').tagcloud();
+        $('#filtri a').tagcloud();
+        $('#categorie a').tagcloud();
+    });
+    $(".tagitem").click(function(){
+        if ($("#tags").val()=="")
+        {$("#tags").val((this).text)}
+        else
+        {$("#tags").val($("#tags").val() + "," + (this).text)}
+        $("#ricerca").submit();
+    });
+

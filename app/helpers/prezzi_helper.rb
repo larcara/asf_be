@@ -1,0 +1,2 @@
+module PrezziHelper
+end

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Id:
+  = @asf_setting.id
+%p
+  %b Value:
+  = @asf_setting.value
+
+= link_to 'Edit', edit_asf_setting_path(@asf_setting)
+\|
+= link_to 'Back', asf_settings_path

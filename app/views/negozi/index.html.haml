@@ -1,0 +1,25 @@
+%h1 Listing negozi
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @negozi.each do |negozio|
+    %tr
+      %td= negozio.denominazione
+      %td= negozio.citta
+      %td= negozio.cap
+      %td= negozio.indirizzo
+      %td= negozio.lat
+      %td= negozio.lng
+      %td= negozio.parcheggio
+      %td= negozio.tipologia
+      %td= link_to 'Show', negozio_url(negozio, format: :json)
+      %td= link_to 'Edit', edit_negozio_path(negozio)
+      %td= link_to 'Destroy', negozio, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Negozio', new_negozio_path

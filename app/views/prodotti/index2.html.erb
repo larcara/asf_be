@@ -1,0 +1,100 @@
+<h1>Lista Prodotti</h1>
+<%=form_for prodotti_url , :method=>:get do %>
+    <%=text_field_tag "tags", params["tags"]%>
+
+    <%=submit_tag "Cerca"%>
+    <div id="whatever">
+      <%Prodotto.tagcloud(params[:tags].to_s.split(",")).each do |x|%>
+          <%=link_to x["_id"], "#", class: "tagitem" , rel: x["value"].to_i, title:x["value"].to_i if x["value"].to_i > 3%>
+      <%end%>
+    </div>
+    <hr>
+    <div id="whatever">
+      <%params[:tags].to_s.split(",").each do |x|%>
+          <a class=remove_tagitem href="#" ><%=x%></a>
+      <%end%>
+    </div>
+    <script>
+        $.fn.tagcloud.defaults = {
+            size: {start: 14, end: 18, unit: 'pt'},
+            color: {start: '#cde', end: '#f52'}
+        };
+
+        $(function () {
+            $('#whatever a').tagcloud();
+            $(".check_box_prodotto").click(function(){
+                alert(this.data("id"));
+                //$(".check_box_prodotto").attr('checked', !$(".check_box_prodotto")[0].checked)
+            });
+
+
+        });
+        $(".tagitem").click(function(){
+            if ($("#tags").val()=="")
+            {$("#tags").val((this).text)}
+            else
+            {$("#tags").val($("#tags").val() + "," + (this).text)}
+            $("#tags").parent().submit();
+        });
+
+        $(".remove_tagitem").click(function(){
+            var test1=(this).text + "," ;
+            var test2="," + (this).text ;
+            var actual_val=$("#tags").val();
+            if (actual_val.indexOf(test1) > -1) {
+                $("#tags").val(actual_val.replace(test1, ""));
+            } else if (actual_val.indexOf(test2)>0) {
+                $("#tags").val(actual_val.replace(test2, ""));
+            } else {
+                $("#tags").val(actual_val.replace((this).text, ""));
+            }
+            $("#tags").parent().submit();
+            return;
+        });
+
+    </script>
+    <%=submit_tag "Unisci"%>
+    <table>
+      <tr>
+        <th id="th_id">id </th>
+        <th>nome</th>
+        <th>marca</th>
+        <th>Tipo</th>
+        <th></th>
+      </tr>
+      <% @prodottos.each do |prodotto| %>
+          <tr >
+            <td>
+              <%=check_box_tag "prodotto_id[]", prodotto.id, nil,{id: prodotto.id, class: "check_box_prodotto pull-left"}%>
+              <%=label_tag prodotto.id, prodotto.nome_commerciale %>
+            </td>
+            <td data-id="<%=prodotto.id%>" class="td_prodotto"><%= prodotto.marca %></td>
+            <td data-id="<%=prodotto.id%>" class="td_prodotto" >
+              <%=link_to "LowPr" ,assenga_tipo_path(id: prodotto.id) , class: "btn btn-mini disabled" %>
+              <%=link_to "G.D.O." ,assenga_tipo_path(id: prodotto.id) , class: "btn btn-mini disabled" %>
+              <%=link_to "Brand" ,assenga_tipo_path(id: prodotto.id) , class: "btn btn-mini disabled" %>
+              <%= prodotto.tipo_prodotto %>
+            </td>
+            <td>
+              <%prodotto.keys.each do |k|%>
+                 <%= link_to (prodotto.images ? image_tag( prodotto.images[k], size:"50x50" ) : k ), prodotto.link(k), target: "_blank" %>
+
+
+              <%end %>
+
+            </td>
+            <td><%= link_to "#{prodotto.prezzi.map{|x| "#{x.valido_al} #{x.package.first} #{x.prezzo}"}.uniq.join(" ") } ", prezzi_path(prodotto_id: prodotto.id) %></td>
+            <td><%= link_to 'json', prodotto_path(prodotto, format: :json) %></td>
+            <td><%= link_to 'cancella', prodotto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+          </tr>
+      <% end %>
+    </table>
+    <%=submit_tag "Unisci"%>
+<%end%>
+<br />
+
+<%= link_to 'New Prodotto', new_prodotto_path %>
+<script>
+
+</script>
