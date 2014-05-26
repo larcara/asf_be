@@ -20,7 +20,8 @@
       desc "Import from KlikkaPromo"
       get :import_from_klikkapromo do
         x=KlikkaPromo.new()
-        x.get_product(9000)
+        (params[:from]..params[:to]).each{|i| x.get_product(i)}
+
       end
     end
   end

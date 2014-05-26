@@ -5,12 +5,13 @@ development:  &development
     default:
       # Defines the name of the default database that Mongoid can connect to.
       # (required).
-      database: test2
+      uri: mongodb://heroku:2s7qmwB6UGVcqcgyi8cf2e4d3W5sMSv8RSwCaHkNduTthtfrNI6vRrRt2gTctHWQ5yQXp0PueOcYfBVIRltA7Q@oceanic.mongohq.com:10013/app25675743
+
       # Provides the hosts the default session can connect to. Must be an array
       # of host:port pairs. (required)
-      hosts:
-        - 127.0.0.1:27017
-#        - 192.168.76.129:27017
+      #hosts:
+      #  - 127.0.0.1:27017
+#     #   - 192.168.76.129:27017
 
       options:
         # Change whether the session persists in safe mode by default.
